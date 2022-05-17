@@ -1,0 +1,32 @@
+# This is a basic workflow to help you get started with Actions
+
+name: workflowcall branch launcher workflow
+
+# Controls when the workflow will run
+on:
+  push:
+    branches:
+      - workflowcall
+    
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  calling-workflow-1:
+    name: Calling workflow 1
+    uses: csing88/ReUsableWorkflow/.github/workflows/reusable_workflow_1.yml@main
+    with:
+      version: 'v2.1.4'
+    secrets:
+      credentials: ${{ secrets.CREDENTIALS }}
+
+  calling-workflow-2:
+    name: Calling workflow 2
+    needs: [calling-workflow-1]
+    uses: csing88/ReUsableWorkflow/.github/workflows/reusable_workflow_2.yml@main
+    with:
+      version: 'v2.1.4'
+    secrets:
+      credentials: ${{ secrets.CREDENTIALS }}
